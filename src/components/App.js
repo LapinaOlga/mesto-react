@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css';
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -70,7 +69,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div className="page">
           <Header/>
           <Main onEditProfile={this.handleEditProfileClick}
@@ -163,7 +162,7 @@ export default class App extends React.Component {
           </label>
         </PopupWithForm>
         <ImagePopup card={this.state.selectedCard} onClose={this.closeAllPopups}/>
-      </div>
+      </React.Fragment>
     );
   }
 }

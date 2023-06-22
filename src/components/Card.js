@@ -1,4 +1,5 @@
 import React from "react";
+
 export default class Card extends React.Component {
   constructor(props) {
     super(props);
@@ -7,11 +8,11 @@ export default class Card extends React.Component {
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
 
-  handleClick(){
+  handleClick() {
     this.props.onCardClick(this.props.card)
   }
 
-  handleDeleteClick(event){
+  handleDeleteClick(event) {
     event.preventDefault()
     event.stopPropagation()
     this.props.onCardDelete(this.props.card)

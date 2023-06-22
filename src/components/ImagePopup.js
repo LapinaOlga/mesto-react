@@ -25,7 +25,7 @@ export default class ImagePopup extends React.Component {
           >
             <img className="popup__icon-close-image" src={closeIcon} alt="Закрывание окна"/>
           </button>
-          <img className="popup__image" src={this.props.card?.link} alt="#"/>
+          <img className="popup__image" src={this.props.card?.link} alt={this.props.card?.name}/>
           <p className="popup__description">{this.props.card?.name}</p>
         </div>
       </div>

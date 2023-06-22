@@ -1,7 +1,7 @@
 import React from "react";
 import logo from '../images/header-logo.svg'
 
-export default class Header extends React.Component{
+export default class Header extends React.Component {
   render() {
     return (
       <header className="header">

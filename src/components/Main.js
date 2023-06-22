@@ -2,7 +2,7 @@ import React from "react";
 import profileAvatar from '../images/profile_avatar.jpg'
 import vectorPencil from '../images/vector-pencil.svg'
 import vectorCross from '../images/vector-cross.svg'
-import Api from '../utils/api.js'
+import api from '../utils/api.js'
 import Card from "./Card";
 
 export default class Main extends React.Component {
@@ -15,35 +15,21 @@ export default class Main extends React.Component {
       userAvatar: '',
       cards: [],
     };
-
-    this._api = new Api({
-      baseUrl: `https://mesto.nomoreparties.co/v1/cohort-66`,
-      headers: {
-        authorization: '03bede17-6085-4ace-b801-04f52b01265d',
-        'Content-Type': 'application/json',
-      },
-    });
   }
 
   get cardElements() {
-    let result = []
-
-    for (const card of this.state.cards) {
-      result.push(
-        <Card
-          card={card}
-          key={card._id}
-          onCardClick={this.props.handleCardClick}
-          onCardDelete={this.props.handleCardDeleteClick}
-        />
-      )
-    }
-
-    return result;
+    return this.state.cards.map(
+      (card) => <Card
+        card={card}
+        key={card._id}
+        onCardClick={this.props.handleCardClick}
+        onCardDelete={this.props.handleCardDeleteClick}
+      />
+    );
   }
 
   componentDidMount() {
-    this._api.getUser()
+    api.getUser()
       .then((user) => {
         if (user.name) {
           this.setState({
@@ -63,7 +49,7 @@ export default class Main extends React.Component {
           })
         }
 
-        this._api.getCardList()
+        api.getCardList()
           .then((cards) => {
             this.setState({cards})
           })
