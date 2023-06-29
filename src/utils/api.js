@@ -29,12 +29,18 @@ class Api {
     })
   }
 
-  addCardLike(cardId) {
-    return this._put(`/cards/${cardId}/likes`)
-  }
-
-  removeCardLike(cardId) {
-    return this._delete(`/cards/${cardId}/likes`)
+  /**
+   *
+   * @param {string} cardId
+   * @param {Boolean} adding
+   * @returns {Promise<Response>}
+   */
+  changeCardLike(cardId, adding) {
+    if (adding) {
+      return this._put(`/cards/${cardId}/likes`)
+    } else {
+      return this._delete(`/cards/${cardId}/likes`)
+    }
   }
 
   deleteCard(id) {

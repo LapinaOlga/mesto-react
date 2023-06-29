@@ -1,65 +1,22 @@
 import React from "react";
-import profileAvatar from '../images/profile_avatar.jpg'
 import vectorPencil from '../images/vector-pencil.svg'
 import vectorCross from '../images/vector-cross.svg'
-import api from '../utils/api.js'
 import Card from "./Card";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 export default class Main extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      userName: '',
-      userDescription: '',
-      userAvatar: '',
-      cards: [],
-    };
-  }
+  static contextType = CurrentUserContext;
 
   get cardElements() {
-    return this.state.cards.map(
+    return this.props.cards.map(
       (card) => <Card
         card={card}
         key={card._id}
         onCardClick={this.props.handleCardClick}
-        onCardDelete={this.props.handleCardDeleteClick}
+        onCardLike={this.props.handleCardLike}
+        onCardDelete={this.props.handleCardDelete}
       />
     );
-  }
-
-  componentDidMount() {
-    api.getUser()
-      .then((user) => {
-        if (user.name) {
-          this.setState({
-            userName: user.name,
-          })
-        }
-
-        if (user.about) {
-          this.setState({
-            userDescription: user.about,
-          })
-        }
-
-        if (user.avatar) {
-          this.setState({
-            userAvatar: user.avatar,
-          })
-        }
-
-        api.getCardList()
-          .then((cards) => {
-            this.setState({cards})
-          })
-          .catch((error) => {
-            console.log('Сервер вернул ошибку', error);
-          });
-      })
-      .catch((error) => {
-        console.log('Сервер вернул ошибку', error);
-      });
   }
 
   render() {
@@ -70,13 +27,13 @@ export default class Main extends React.Component {
                   onClick={this.props.onEditAvatar}
           >
             <img className="profile__avatar"
-                 src={profileAvatar}
+                 src={this.context.avatar}
                  alt="Аватар"
             />
           </button>
           <div className="profile__info">
             <div className="profile__area">
-              <h1 className="profile__title">{this.state.userName}</h1>
+              <h1 className="profile__title">{this.context.name}</h1>
               <button className="profile__edit-button"
                       type="button"
                       onClick={this.props.onEditProfile}
@@ -87,7 +44,7 @@ export default class Main extends React.Component {
                 />
               </button>
             </div>
-            <p className="profile__subtitle">{this.state.userDescription}</p>
+            <p className="profile__subtitle">{this.context.about}</p>
           </div>
           <button className="profile__button"
                   type="button"
