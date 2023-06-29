@@ -41,6 +41,7 @@ export default class AddPlacePopup extends React.Component {
       <PopupWithForm
         title="Новое место"
         name="card"
+        buttonText={this.props.buttonText}
         isOpen={this.props.isOpen}
         onClose={this.props.onClose}
         onSubmit={this.handleAddPlaceSubmit}

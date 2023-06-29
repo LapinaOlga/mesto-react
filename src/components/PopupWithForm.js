@@ -1,46 +1,46 @@
 import React from 'react';
 import closeIcon from '../images/close-icon.png'
+import usePopupClose from "../hooks/usePopupClose";
 
-export default class PopupWithForm extends React.Component {
-  get containerClassName() {
-    const classNames = ['popup', `${this.props.name}-popup`];
+export default function PopupWithForm(props) {
+  const [containerClassName, setContainerClassName] = React.useState(`popup ${props.name}-popup`)
 
-    if (this.props.isOpen) {
-      classNames.push('popup_opened')
-    }
+  React.useEffect(() => {
+    setContainerClassName(
+      props.isOpen
+        ? `popup ${props.name}-popup popup_opened`
+        : `popup ${props.name}-popup`
+    )
+  }, [props.isOpen])
 
-    return classNames.join(' ');
-  }
+  usePopupClose(props.isOpen, props.onClose)
 
-  render() {
-    return (
-      <div className={this.containerClassName}>
-        <div className="popup__container">
-          <button
-            className="popup__icon-close"
-            type="button"
-            onClick={this.props.onClose}
-          >
-            <img className="popup__icon-close-image"
-                 src={closeIcon}
-                 alt="Закрывание окна"
-            />
+  return (
+    <div className={containerClassName}>
+      <div className="popup__container">
+        <button
+          className="popup__icon-close"
+          type="button"
+          onClick={props.onClose}
+        >
+          <img className="popup__icon-close-image"
+               src={closeIcon}
+               alt="Закрывание окна"
+          />
+        </button>
+        <h2 className="popup__title">{props.title}</h2>
+        <form className="popup__form"
+              name={`${props.name}Form`}
+              onSubmit={props.onSubmit}
+        >
+          <div className="popup__area">
+            {props.children}
+          </div>
+          <button className="popup__button" type="submit">
+            {props.buttonText ?? 'Сохранить'}
           </button>
-          <h2 className="popup__title">{this.props.title}</h2>
-          <form className="popup__form"
-                name={`${this.props.name}Form`}
-                onSubmit={this.props.onSubmit}
-                noValidate
-          >
-            <div className="popup__area">
-              {this.props.children}
-            </div>
-            <button className="popup__button" type="submit">
-              {this.props.buttonText ?? 'Сохранить'}
-            </button>
-          </form>
-        </div>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
 }

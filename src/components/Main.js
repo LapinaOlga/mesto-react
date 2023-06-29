@@ -9,13 +9,15 @@ export default class Main extends React.Component {
 
   get cardElements() {
     return this.props.cards.map(
-      (card) => <Card
-        card={card}
-        key={card._id}
-        onCardClick={this.props.handleCardClick}
-        onCardLike={this.props.handleCardLike}
-        onCardDelete={this.props.handleCardDelete}
-      />
+      (card) => (
+        <Card
+          card={card}
+          key={card._id}
+          onCardClick={this.props.handleCardClick}
+          onCardLike={this.props.handleCardLike}
+          onCardDelete={this.props.handleCardDelete}
+        />
+      )
     );
   }
 

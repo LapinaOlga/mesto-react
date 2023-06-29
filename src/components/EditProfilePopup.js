@@ -43,8 +43,9 @@ export default class EditProfilePopup extends React.Component {
     return (
       <PopupWithForm title="Редактировать профиль"
                      name="profile"
+                     buttonText={this.props.buttonText}
                      isOpen={this.props.isOpen}
-                     onClose={this.onClose}
+                     onClose={this.props.onClose}
                      onSubmit={this.handleSubmit}
       >
         <label className="popup__label">

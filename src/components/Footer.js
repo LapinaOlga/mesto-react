@@ -1,11 +1,11 @@
 import React from "react";
 
-export default class Footer extends React.Component {
-  render() {
-    return (
-      <footer className="footer">
-        <p className="footer__copyright">© 2020 Mesto Russia</p>
-      </footer>
-    );
-  }
+export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="footer">
+      <p className="footer__copyright">© {currentYear} Mesto Russia</p>
+    </footer>
+  );
 }

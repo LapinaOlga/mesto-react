@@ -1,34 +1,32 @@
 import React from "react";
 import closeIcon from '../images/close-icon.png'
+import usePopupClose from "../hooks/usePopupClose";
 
-export default class ImagePopup extends React.Component {
-  get containerClassName() {
-    const parts = [
-      'popup',
-      'image-popup',
-    ]
+export default function ImagePopup(props) {
+  const [containerClassName, setContainerClassName] = React.useState('popup image-popup');
 
-    if (this.props.card) {
-      parts.push('popup_opened')
-    }
+  React.useEffect(() => {
+    setContainerClassName(
+      props.card
+        ? 'popup image-popup popup_opened'
+        : 'popup image-popup'
+    )
+  }, [props.card])
 
-    return parts.join(' ')
-  }
+  usePopupClose(props.isOpen, props.onClose)
 
-  render() {
-    return (
-      <div className={this.containerClassName}>
-        <div className="popup__container-image">
-          <button className="popup__icon-close"
-                  type="button"
-                  onClick={this.props.onClose}
-          >
-            <img className="popup__icon-close-image" src={closeIcon} alt="Закрывание окна"/>
-          </button>
-          <img className="popup__image" src={this.props.card?.link} alt={this.props.card?.name}/>
-          <p className="popup__description">{this.props.card?.name}</p>
-        </div>
+  return (
+    <div className={containerClassName}>
+      <div className="popup__container-image">
+        <button className="popup__icon-close"
+                type="button"
+                onClick={props.onClose}
+        >
+          <img className="popup__icon-close-image" src={closeIcon} alt="Закрывание окна"/>
+        </button>
+        <img className="popup__image" src={props.card?.link} alt={props.card?.name}/>
+        <p className="popup__description">{props.card?.name}</p>
       </div>
-    );
-  }
+    </div>
+  );
 }
