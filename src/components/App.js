@@ -31,7 +31,7 @@ export default function App() {
     setIsAddPlacePopupOpen(false);
     setIsDeletingAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
-    setSelectedCard(false);
+    setSelectedCard(null);
   };
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -59,7 +59,6 @@ export default function App() {
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    setIsSaving(true);
 
     api.changeCardLike(card._id, !isLiked)
       .then((newCard) => {
@@ -67,8 +66,7 @@ export default function App() {
       })
       .catch((error) => {
         console.log('Сервер вернул ошибку', error);
-      })
-      .finally(() => setIsSaving(false));
+      });
   }
 
   const handleUpdateUser = (user) => {
@@ -111,7 +109,6 @@ export default function App() {
   }
 
   // mount
-  const isMounted = React.useRef(false);
   React.useEffect(() => {
     api.getUser()
       .then((user) => setCurrentUser(user))
@@ -124,7 +121,7 @@ export default function App() {
       .catch((error) => {
         console.log('Сервер вернул ошибку', error);
       });
-  }, [isMounted]);
+  }, []);
 
   if (!currentUser) {
     return '';
@@ -165,7 +162,7 @@ export default function App() {
         onSubmit={handleCardDestroy}
       />
       <EditAvatarPopup
-        buttonText={isSaving ? 'Сохраняется...' : 'Да'}
+        buttonText={isSaving ? 'Сохраняется...' : 'Сохранить'}
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
         onUpdateAvatar={handleUpdateAvatar}
